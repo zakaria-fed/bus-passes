@@ -1,23 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import { Route, Routes } from "react-router-dom";
+import AuthentificationPage from "./pages/Authentification";
+import DashboardPage from "./pages/Dashboard";
 
 function App() {
+  const [authentified, setAuthentified] = useState(false);
+  const [authUser, setAuthUser] = useState({});
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <AuthentificationPage
+              auth={authentified}
+              handleAuth={setAuthentified}
+              setAuthUser={setAuthUser}
+            />
+          }
+        />
+        <Route
+          path="/dashboard"
+          authUser={authUser}
+          element={
+            <DashboardPage
+              auth={authentified}
+              handleAuth={setAuthentified}
+              authUser={authUser}
+            />
+          }
+        />
+      </Routes>
     </div>
   );
 }
